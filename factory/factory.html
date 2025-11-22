@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NovaTech Factory Floor – Intermediate</title>
+    <link rel="stylesheet" href="factory.css">
+    <script src="factory-data.js" defer></script>
+    <script src="factory.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+    <h1>Factory Floor – NovaTech Electronics</h1>
+    <a href="../index.html" class="back-btn">← Back to Dashboard</a>
+</header>
+
+<div class="container">
+
+    <div class="factory-grid" id="factoryGrid"></div>
+
+    <aside class="machine-panel" id="machinePanel">
+
+        <img class="panel-img" id="pImg">
+
+        <h2 id="pName"></h2>
+        <p><strong>ID:</strong> <span id="pId"></span></p>
+        <p><strong>Status:</strong> <span id="pStatus"></span></p>
+
+        <div class="panel-section">
+            <h3>Performance</h3>
+            <p><strong>Throughput/hr:</strong> <span id="pRate"></span></p>
+            <p><strong>Temperature:</strong> <span id="pTemp"></span></p>
+            <p><strong>Power:</strong> <span id="pPower"></span></p>
+            <p><strong>Uptime:</strong> <span id="pUptime"></span></p>
+            <p><strong>Downtime:</strong> <span id="pDowntime"></span></p>
+            <p><strong>MTBF:</strong> <span id="pMTBF"></span></p>
+        </div>
+
+        <div class="panel-section">
+            <h3>Operator</h3>
+            <p><strong>Assigned:</strong> <span id="pOperator"></span></p>
+        </div>
+
+        <div class="panel-section">
+            <h3>Maintenance</h3>
+            <p><strong>Last:</strong> <span id="pLast"></span></p>
+            <p><strong>Next:</strong> <span id="pNext"></span></p>
+        </div>
+
+        <div class="panel-section">
+            <h3>Sensors</h3>
+            <div id="sensorBox"></div>
+        </div>
+
+        <div class="panel-section">
+            <h3>Error History</h3>
+            <div id="errorBox"></div>
+        </div>
+
+        <button id="closePanel">Close</button>
+    </aside>
+
+</div>
+
+</body>
+</html>

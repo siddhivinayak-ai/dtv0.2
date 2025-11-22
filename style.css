@@ -1,0 +1,119 @@
+/* style.css */
+/* File: style.css — updated for Module 2 map & marker styles */
+
+:root{
+  --bg: #f7f9fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --accent: #0ea5e9;
+  --accent-2: #0369a1;
+  --kpi-shadow: rgba(2,6,23,0.06);
+  --glass: rgba(255,255,255,0.6);
+  --danger: #ef4444;
+  --success: #10b981;
+  --warn: #f59e0b;
+  --sidebar-w: 240px;
+}
+
+html[data-theme="dark"]{
+  --bg: #0b1220;
+  --card: #0f1724;
+  --muted: #9ca3af;
+  --text: #e6eef6;
+  --accent: #38bdf8;
+  --kpi-shadow: rgba(2,6,23,0.4);
+  --glass: rgba(255,255,255,0.03);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;
+}
+
+/* App layout */
+.app{display:grid;grid-template-columns:var(--sidebar-w) 1fr 360px;gap:16px;padding:16px}
+
+/* Sidebar */
+.sidebar{background:linear-gradient(180deg,var(--card),var(--glass));border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 18px var(--kpi-shadow);min-height:80vh}
+.logo-mark{width:44px;height:44px;border-radius:8px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* Nav */
+.nav{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.nav-link{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;color:var(--muted);text-decoration:none;cursor:pointer}
+.nav-link.active{background:rgba(14,165,233,0.08);color:var(--accent-2);font-weight:600}
+
+/* Main */
+.main{display:flex;flex-direction:column;gap:12px}
+
+/* Topbar */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px var(--kpi-shadow)}
+.search input{padding:8px 32px 8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:transparent}
+.icon-btn{background:transparent;border:0;padding:8px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:16px}
+
+/* KPI row */
+.content-grid{display:grid;gap:12px;grid-auto-rows:min-content;margin-top:8px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi-card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 8px 20px var(--kpi-shadow);display:flex;flex-direction:column;gap:6px}
+.kpi-title{font-size:13px;color:var(--muted)}.kpi-value{font-size:26px;font-weight:700}.kpi-sub{font-size:12px;color:var(--muted)}
+
+/* placeholders + map */
+.placeholders{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:8px}
+.panel{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 20px var(--kpi-shadow)}
+.map{height:420px;border-radius:8px;overflow:hidden}
+
+/* map control actions */
+.panel-actions{display:flex;gap:8px;margin-bottom:8px}
+
+/* notifications */
+.notifications{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 20px var(--kpi-shadow);min-height:80vh;overflow:auto}
+.alert-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.alert{padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(0,0,0,0.02),transparent);display:flex;gap:10px;align-items:flex-start}
+.alert .dot{width:10px;height:10px;border-radius:999px;margin-top:6px}
+.alert .body{flex:1}.alert .time{font-size:12px;color:var(--muted)}
+.alert.warn{border-left:4px solid var(--warn)}.alert.danger{border-left:4px solid var(--danger)}.alert.info{border-left:4px solid var(--accent)}
+
+/* Leaflet custom marker and pulse */
+.leaflet-container{background:linear-gradient(180deg,#eaf6ff,#ffffff)}
+.pulse-marker{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:999px;color:white;font-size:12px;
+  box-shadow:0 0 0 rgba(0,0,0,0.1);
+  animation: pulse 2s infinite;
+  border:2px solid rgba(255,255,255,0.3);
+}
+.pulse-supplier{background:var(--accent-2)}
+.pulse-factory{background:#0ea5a6}
+.pulse-warehouse{background:#6366f1}
+.pulse-retail{background:#f97316}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(14,165,233,0.35)}
+  70%{box-shadow:0 0 0 12px rgba(14,165,233,0.03)}
+  100%{box-shadow:0 0 0 0 rgba(14,165,233,0.0)}
+}
+
+/* moving truck icon */
+.truck-marker{
+  width:18px;height:18px;border-radius:4px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+  transform:translate(-9px,-9px);
+}
+
+/* responsive */
+@media (max-width:1000px){
+  .app{grid-template-columns:72px 1fr 320px}
+  .logo-text{display:none}
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+  .placeholders{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto;gap:10px;padding:10px}
+  .sidebar{display:flex;flex-direction:row;align-items:center;gap:8px;padding:8px;border-radius:10px}
+  .main{order:2}
+  .notifications{order:3;min-height:160px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+}
+
+/* map container ensures map has full width/height */
+#map{width:100%;height:380px;border-radius:8px}

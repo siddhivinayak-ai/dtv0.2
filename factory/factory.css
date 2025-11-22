@@ -1,0 +1,261 @@
+/* ==========================================================
+   GLOBAL DARK THEME
+   ========================================================== */
+   :root {
+    --bg-main: #0d0f14;
+    --bg-card: #181c23;
+    --bg-panel: #14171e;
+    --bg-section: #1c212b;
+  
+    --text-main: #e4e7ee;
+    --text-soft: #d2d5dd;
+    --text-accent: #9be2d8;
+  
+    --running: #00ff7b;
+    --idle: #ffe66b;
+    --fault: #ff4c4c;
+    --glow: rgba(0,170,255,0.7);
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+  }
+  
+  /* ==========================================================
+     TOP BAR
+     ========================================================== */
+  .topbar {
+    background: #11141c;
+    padding: 14px 22px;
+    color: var(--text-main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  }
+  
+  .topbar h1 {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+  }
+  
+  .back-btn {
+    color: #7ab4ff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+  
+  .back-btn:hover {
+    color: #a4ccff;
+  }
+  
+  /* ==========================================================
+     LAYOUT
+     ========================================================== */
+  .container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* ==========================================================
+     FACTORY GRID
+     ========================================================== */
+  .factory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    flex: 1;
+  }
+  
+  /* ==========================================================
+     MACHINE CARD
+     ========================================================== */
+  .machine {
+    background: var(--bg-card);
+    height: fit-content;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  
+  .machine:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.5);
+  }
+  
+  /* Image area */
+  .machine img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0.9;
+    transition: 0.25s;
+  }
+  
+  .machine:hover img {
+    opacity: 1;
+  }
+  
+  /* Machine title */
+  .machine-title {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text-main);
+    text-shadow: 0 0 3px rgba(255,255,255,0.1);
+  }
+  
+  /* ==========================================================
+     STATUS COLOR STRIPS
+     ========================================================== */
+  .running { border-left: 6px solid var(--running); }
+  .idle { border-left: 6px solid var(--idle); }
+  .fault { border-left: 6px solid var(--fault); }
+  
+  /* Glow animation when selected */
+  .machine.glow {
+    animation: glowPulse 1.4s infinite alternate;
+    box-shadow: 0 0 18px 4px var(--glow);
+  }
+  
+  @keyframes glowPulse {
+    from { box-shadow: 0 0 10px 2px var(--glow); }
+    to   { box-shadow: 0 0 26px 6px var(--glow); }
+  }
+  
+  /* ==========================================================
+     MACHINE DETAILS PANEL
+     ========================================================== */
+  .machine-panel {
+    width: 350px;
+    background: var(--bg-panel);
+    border-left: 1px solid rgba(255,255,255,0.05);
+    padding: 22px;
+    transform: translateX(100%);
+    transition: 0.35s ease;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.45);
+  }
+  
+  .machine-panel.open {
+    transform: translateX(0);
+  }
+  
+  .panel-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  }
+  
+  /* Title inside panel */
+  .panel-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-accent);
+  }
+  
+  /* ==========================================================
+     PANEL SECTIONS
+     ========================================================== */
+  .panel-section {
+    margin-top: 20px;
+    padding: 14px;
+    background: var(--bg-section);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
+  }
+  
+  .panel-section h3 {
+    margin: 0 0 12px 0;
+    color: var(--text-accent);
+    font-size: 15px;
+    letter-spacing: 0.4px;
+  }
+  
+  .panel-section p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+  
+  strong {
+    color: var(--text-accent);
+  }
+  
+  /* ==========================================================
+     SENSOR + ERROR LIST STYLING
+     ========================================================== */
+  #sensorBox p, #errorBox p {
+    margin: 6px 0;
+    padding: 6px 8px;
+    background: #10131a;
+    border-radius: 6px;
+    font-size: 13px;
+    border-left: 3px solid #356b9a;
+    color: #cfd3dd;
+  }
+  
+  #errorBox p {
+    border-left: 3px solid #ff4c4c;
+  }
+  
+  /* ==========================================================
+     CLOSE BUTTON
+     ========================================================== */
+  #closePanel {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px;
+    background: #0d47a1;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.25s;
+  }
+  
+  #closePanel:hover {
+    background: #1565c0;
+  }
+  
+  /* ==========================================================
+     RESPONSIVE
+     ========================================================== */
+  @media (max-width: 850px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .machine-panel {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 70%;
+      overflow-y: auto;
+      border-left: none;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      transform: translateY(100%);
+    }
+  
+    .machine-panel.open {
+      transform: translateY(0);
+    }
+  }
+  

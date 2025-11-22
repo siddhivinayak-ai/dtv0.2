@@ -1,0 +1,162 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NovaTech — Supply Chain Digital Twin (Module 2)</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a2d9b8f0a5.js" crossorigin="anonymous"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Other libraries (kept for Module1 & later) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo">
+          <span class="logo-mark">NT</span>
+          <div class="logo-text">
+            <strong>NovaTech</strong>
+            <small>Supply Twin</small>
+          </div>
+        </div>
+        <button id="toggleSidebar" class="icon-btn" title="Toggle sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link active"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        <a class="nav-link" href="factory/factory.html"><i class="fas fa-industry"></i><span>Factory Floor</span></a>
+        <a class="nav-link" href="modules/sankey/sankey.html"><i class="fas fa-project-diagram"></i><span>Material Flow (Sankey)</span></a>
+
+        <a class="nav-link"><i class="fas fa-truck-moving"></i><span>Shipments</span></a>
+        <a class="nav-link"><i class="fas fa-warehouse"></i><span>Warehouses</span></a>
+        <a class="nav-link"><i class="fas fa-map-marker-alt"></i><span>Map</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <small>v0.2 • Module 2</small>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Top Navbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1>Nova X7 — Supply Chain Twin</h1>
+          <p class="muted">Live simulation (Module 2: Map)</p>
+        </div>
+        <div class="topbar-right">
+          <div class="search">
+            <input type="search" placeholder="Search..." />
+            <i class="fas fa-search"></i>
+          </div>
+
+          <div class="top-actions">
+            <button id="darkToggle" class="icon-btn" title="Toggle dark mode"><i id="darkIcon" class="fas fa-moon"></i></button>
+            <button id="notifToggle" class="icon-btn" title="Toggle alerts"><i class="fas fa-bell"></i></button>
+            <div class="avatar"><i class="fas fa-user-circle"></i></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content grid -->
+      <section class="content-grid">
+        <!-- KPI Cards -->
+        <section class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-title">Production Today</div>
+            <div class="kpi-value" data-key="productionToday">0</div>
+            <div class="kpi-sub">units</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-title">Inventory Stock</div>
+            <div class="kpi-value" data-key="inventoryStock">0</div>
+            <div class="kpi-sub">total units</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-title">On-Time Shipment</div>
+            <div class="kpi-value" data-key="onTimePercent">0</div>
+            <div class="kpi-sub">%</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-title">Active Suppliers</div>
+            <div class="kpi-value" data-key="activeSuppliers">0</div>
+            <div class="kpi-sub">suppliers</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-title">Factory Utilization</div>
+            <div class="kpi-value" data-key="factoryUtil">0</div>
+            <div class="kpi-sub">%</div>
+          </div>
+        </section>
+
+        <!-- Map + factory + charts placeholders -->
+        <section class="placeholders map-and-panels">
+          <div class="panel" id="mapPanel">
+            <div class="panel-actions">
+              <button id="centerFactory" class="text-btn"><i class="fas fa-crosshairs"></i> Center Factory</button>
+              <button id="toggleRoutes" class="text-btn"><i class="fas fa-route"></i> Toggle Routes</button>
+            </div>
+            <div id="map" class="map"></div>
+          </div>
+
+          <div class="panel placeholder" id="factoryPlaceholder">
+            <h3>Factory Floor (Module 2)</h3>
+            <p class="muted">Factory visualization and machine list are available in Module 2 expansion.</p>
+          </div>
+
+          <div class="panel placeholder" id="chartsPlaceholder">
+            <h3>Inventory & Sankey (Module 2)</h3>
+            <p class="muted">Charts will appear here in the next module.</p>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <!-- Notifications panel (right) -->
+    <aside id="notifications" class="notifications">
+      <div class="notif-header">
+        <h3>Alerts & Notifications</h3>
+        <div class="notif-controls">
+          <button id="clearAlerts" class="text-btn">Clear</button>
+          <button id="pinAlerts" class="icon-btn" title="Pin"><i class="fas fa-thumbtack"></i></button>
+        </div>
+      </div>
+      <div id="alertList" class="alert-list"></div>
+      <div class="notif-footer">
+        <small class="muted">Auto-generated alerts (simulation)</small>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Data file -->
+  <script src="data.js"></script>
+
+  <!-- Main script -->
+  <script src="script.js"></script>
+</body>
+</html>

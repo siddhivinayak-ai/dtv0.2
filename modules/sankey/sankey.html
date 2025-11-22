@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>EV OEM Supply-Chain Sankey — Level 2 (Advanced)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- D3 + d3-sankey -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+  <link rel="stylesheet" href="sankey.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="hdr-left">
+      <h1>EV OEM Supply Chain — Digital Twin (Level 2)</h1>
+      <p class="muted">TATA Curve • Mahindra BE.05 • Tesla Model Y • BYD Seal — multi-metric realtime Sankey</p>
+    </div>
+
+    <div class="hdr-right">
+      <a class="back" href="../../index.html">← Dashboard</a>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="control-row">
+      <label>Metric:
+        <select id="metricSelect">
+          <option value="quantity">Quantity (units)</option>
+          <option value="cost">Cost (USD)</option>
+          <option value="carbon">CO₂ (kg)</option>
+          <option value="leadTime">Lead Time (days)</option>
+        </select>
+      </label>
+
+      <label>Demand multiplier: <input id="demandSlider" type="range" min="50" max="200" value="100"> <span id="demandVal">100%</span></label>
+
+      <label>Lead-time multiplier: <input id="ltSlider" type="range" min="50" max="300" value="100"> <span id="ltVal">100%</span></label>
+
+      <button id="btnToggle" class="btn">Pause</button>
+      <button id="btnExport" class="btn">Export SVG</button>
+
+      <label><input id="disruptToggle" type="checkbox"> Simulate disruption (random)</label>
+    </div>
+
+    <div class="control-row small">
+      <small>Tip: toggle metric to see flow re-weighting (cost/carbon/leadTime). Use demand slider to simulate spikes.</small>
+    </div>
+  </div>
+
+  <main class="main">
+    <section class="left">
+      <div id="vizWrap" class="vizWrap">
+        <svg id="sankeySVG" aria-label="Material flow Sankey visualization"></svg>
+        <div id="tooltip" class="tooltip" style="display:none"></div>
+      </div>
+
+      <div class="tables">
+        <div class="table-card">
+          <h3>Production / Plant Table</h3>
+          <table id="productionTable">
+            <thead><tr><th>OEM</th><th>Plant</th><th>Units/hr</th><th>Util%</th><th>Temp (°C)</th><th>Defect%</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <h3>Logistics / Shipments</h3>
+          <table id="logisticsTable">
+            <thead><tr><th>From</th><th>To</th><th>Metric</th><th>Value</th><th>ETA(days)</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <aside class="right">
+      <div class="panel alerts">
+        <h3>Alerts</h3>
+        <div id="alertsList"></div>
+      </div>
+
+      <div class="panel legend">
+        <h3>Legend</h3>
+        <div id="legend"></div>
+      </div>
+
+      <div class="panel scenario">
+        <h3>Quick Scenarios</h3>
+        <button id="scen_chip" class="small-btn">Chip Shortage</button>
+        <button id="scen_port" class="small-btn">Port Congestion</button>
+        <button id="scen_restore" class="small-btn">Clear Scenarios</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <small>Level 2 Sankey • auto-updates every 5s • click node to drill-down • isolate flows</small>
+  </footer>
+
+  <!-- Data & logic -->
+  <script src="sankey-data.js"></script>
+  <script src="sankey.js"></script>
+</body>
+</html>
